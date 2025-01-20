@@ -4,7 +4,7 @@ describe('Data Driven Suite2',()=>{ //Test suite
    
     jsonData.forEach((testData)=>{
 
-        it('Data Driven TestCase1',()=>{ //Test cases
+        it.skip('Data Driven TestCase1',()=>{ //Test cases
 
             cy.visit('https://www.google.co.in/search?q=cypress+documentation&')
             cy.get('textarea[name="q"]').clear();

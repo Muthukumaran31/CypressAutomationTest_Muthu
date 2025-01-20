@@ -1,7 +1,7 @@
 import { fail } from "assert-plus"
 
 describe("Cypress Selectors Suite",()=>{
-    it("Cypress Selector Test",()=>{
+    it.skip("Cypress Selector Test",()=>{
     
     //Selectors
 

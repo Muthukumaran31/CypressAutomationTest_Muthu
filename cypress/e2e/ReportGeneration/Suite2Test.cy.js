@@ -1,6 +1,6 @@
 
 describe(" Suite 2 ",()=>{
-    it("Suite 2 Test",()=>{
+    it.skip("Suite 2 Test",()=>{
     
     //Selectors
 

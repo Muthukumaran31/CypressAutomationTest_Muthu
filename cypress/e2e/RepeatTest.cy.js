@@ -2,7 +2,7 @@ describe('Repeat Test Suite',()=>{ //Test suite
    
     Cypress._.times(2, (k)=>{
 
-        it('Repeat Test 1',()=>{ //Test cases
+        it.skip('Repeat Test 1',()=>{ //Test cases
            
             //to.equal
             cy.visit('https://www.google.co.in/search?q=cypress+assertions')

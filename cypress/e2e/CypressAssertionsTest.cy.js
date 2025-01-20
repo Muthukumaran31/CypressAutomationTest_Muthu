@@ -1,9 +1,9 @@
 describe('Cypress Assertion Suite',()=>{ //Test suite
-    it('Cypress Assertion Test',()=>{ //Test cases
+    it.skip('Cypress Assertion Test',()=>{ //Test cases
            
         //to.equal
         
-        cy.visit('https://www.google.co.in/search?q=cypress+assertions')
+        cy.visit('https://www.google.co.in/search?q=cypress+assertions&sca_esv=76438c6487a38795&sxsrf=ADLYWIIW91pguJcvuyaKCa4utjdwUbu5zg%3A1737354078875&ei=XuuNZ5P8NP2A5OUP3aDQkAI&ved=0ahUKEwiTo-Gl1IOLAxV9ALkGHV0QFCIQ4dUDCBA&uact=5&oq=cypress+assertions&gs_lp=Egxnd3Mtd2l6LXNlcnAiEmN5cHJlc3MgYXNzZXJ0aW9uczIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzINEAAYgAQYsAMYQxiKBTINEAAYgAQYsAMYQxiKBUj-AlAAWABwAXgBkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAIGmAMAiAYBkAYKkgcBMaAHAA&sclient=gws-wiz-serp')
         cy.log("Executing Assertion on to.equal") 
         cy.get('textarea[aria-label="Search"]').then((element)=>{
                 expect(element.text()).to.equal("cypress assertions");

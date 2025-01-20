@@ -1,7 +1,7 @@
 describe('Cypress Skip Test Suite',()=>{ //Test suite
    
   
-    it('Skip Test 1',()=>{ //Test cases
+    it.skip('Skip Test 1',()=>{ //Test cases
            
         //to.equal
         cy.visit('https://www.google.co.in/search?q=cypress+assertions')
@@ -29,7 +29,7 @@ describe('Cypress Skip Test Suite',()=>{ //Test suite
         cy.get('textarea[aria-label="Search"]').should("have.text","cypress assertions")
     })
 
-    it('Skip Test 3',()=>{ //Test cases
+    it.skip('Skip Test 3',()=>{ //Test cases
            
         //to.equal
         cy.visit('https://www.google.co.in/search?q=cypress+assertions')

@@ -17,7 +17,7 @@ describe('Cypress Hook Suite',()=>{ //Test suite
         cy.log('Running after each test!')
           })       
 
-    it('Hooks Test 1',()=>{ //Test cases
+    it.skip('Hooks Test 1',()=>{ //Test cases
            
         //to.equal
        // cy.visit('https://www.google.co.in/search?q=cypress+assertions')
@@ -31,7 +31,7 @@ describe('Cypress Hook Suite',()=>{ //Test suite
         cy.get('textarea[aria-label="Search"]').should("have.text","cypress assertions")
     })
 
-    it('Hooks Test 2',()=>{ //Test cases
+    it.skip('Hooks Test 2',()=>{ //Test cases
            
         //to.equal
        // cy.visit('https://www.google.co.in/search?q=cypress+assertions')

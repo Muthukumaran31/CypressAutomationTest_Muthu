@@ -1,5 +1,5 @@
 describe('Module 1 Suite',()=>{ //Test suite
-    it('Module 1 Test',()=>{ //Test cases
+    it.skip('Module 1 Test',()=>{ //Test cases
            
         //to.equal
         

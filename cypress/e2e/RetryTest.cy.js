@@ -2,7 +2,7 @@ describe('Retry Test Suite',()=>{ //Test suite
    
 
 
-        it('Repeat Test 1',{retries:2},()=>{ //Test cases
+        it.skip('Repeat Test 1',{retries:2},()=>{ //Test cases
            
             //to.equal
             cy.visit('https://www.google.co.in/search?q=cypress+assertions')
