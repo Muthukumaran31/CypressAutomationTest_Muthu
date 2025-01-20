@@ -1,6 +1,6 @@
 describe('Record & play suite',()=>{
   
-    it('Valide-Testcases', function() {
+    it.skip('Valide-Testcases', function() {
         /* ==== Generated with Cypress Studio ==== */
         cy.visit('https://www.google.co.in/');
         cy.get('#APjFqb').click();

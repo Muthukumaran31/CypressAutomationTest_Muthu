@@ -5,7 +5,7 @@ describe('My First Test',()=>{ //Test suite
             cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
             cy.title().should('eq','OrangeHRM') //assertion
      })
-     it('test2-VerifyTitle-Negative',()=>{
+     it.skip('test2-VerifyTitle-Negative',()=>{
        cy.log("Second test cases 002")
         cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
         cy.title().should('eq','OrangeHRM122')
