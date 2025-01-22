@@ -1,6 +1,6 @@
-import Login from './pages/LoginPage'
-import Homepage from './pages/HomePageAssert'
-import Logout from './pages/LogoutPage'
+import Login from '../pages/LoginPage'
+import Homepage from '../pages/HomePageAssert'
+import Logout from '../pages/LogoutPage'
 
 describe('Page Object Test Suite', ()=>{
 
@@ -19,7 +19,7 @@ describe('Page Object Test Suite', ()=>{
         //Logout from website
         Logout.LogoutHRM();
     
-
+    
     })
 
 })

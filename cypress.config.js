@@ -11,7 +11,13 @@ module.exports = defineConfig({
   //For Video-Test Execution Recording 
 	video:true,
 
+  
+
+
   e2e: {
+    //Ensure that the experimentalOriginDependencies flag is enabled in your Cypress configuration file (cypress.config.js
+    experimentalOriginDependencies: true,
+
     setupNodeEvents(on, config) {
       // implement node event listeners here
     

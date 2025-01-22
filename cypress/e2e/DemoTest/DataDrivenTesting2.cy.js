@@ -1,4 +1,4 @@
-const jsonData = require('../fixtures/datadriventest2.json')
+const jsonData = require('../../fixtures/datadriventest2.json')
 
 describe('Data Driven Suite2',()=>{ //Test suite
    

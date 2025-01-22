@@ -42,3 +42,4 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
   //mochawesome reporting
   import'cypress-mochawesome-reporter/register';
+
