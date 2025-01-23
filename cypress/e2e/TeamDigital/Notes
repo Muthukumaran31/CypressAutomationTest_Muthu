@@ -1,0 +1,452 @@
+describe('Handle Redirects and Form Submission', () => {
+    
+
+//General Approach
+  it('Test cases for OneINSight 1', () => {   
+    cy.visit('https://digitaldev.teaminc.com/#/')
+    cy.log("Landed in Digital Dev TeamInc Website")
+    cy.get('.dx-button-text').click()
+    cy.wait(3000)
+
+    cy.origin('https://teamincb2c.b2clogin.com', () => {
+      cy.log("Landed in TeamInc B2C Website")
+      cy.get('input#logonIdentifier').type('muthukumaran.dakshinamurthy@psiog.com')
+      cy.get('input#password').type('Muthu1234team@')
+      cy.get('button#next').click()
+      })    
+    cy.wait(3000)
+    cy.get('div.user-name').contains(' D, Muthukumaran')
+    //cy.get('div.user-name').should('be.visible')
+    cy.xpath("(//span[@class='dx-checkbox-icon'])[1]").click()
+    cy.xpath("(//div[@class='dx-texteditor-input-container'])[1]").type('Sample test 123')
+    cy.xpath("(//input[@class='dx-texteditor-input'])[2]").type('Demo Team contach')
+    cy.get("span.dx-button-text").click()
+    cy.get('.dx-popup-title > .dx-toolbar-items-container > .dx-toolbar-before > .dx-item > .dx-item-content > div').contains('Successfully Submitted Access Request')
+    cy.get('.dx-item-content > .dx-widget > .dx-button-content > .dx-button-text').click()
+    })
+  
+
+})
+
+
+
+//2301
+
+
+describe('Test Suite for OneInSight', () => {
+
+    beforeEach('Set up login session', () => {
+      cy.session('login', () => {
+        // Define the login steps inside this setup function
+        cy.visit('https://digitaldev.teaminc.com/#/');
+        cy.get('.dx-button-text').click();
+        
+        cy.fixture('oneinsight.json').then((data) => {
+          cy.origin('https://teamincb2c.b2clogin.com', { args: { data } }, ({ data }) => {
+            const Login = Cypress.require('../PageObjects/LoginPage');
+            const ln = new Login();
+            ln.setUserName(data.Username);
+            ln.setPassword(data.Password);
+            ln.clickSubmit();
+          });
+        });
+        
+        // Validate the user has logged in successfully
+        cy.url().should('eq', 'https://digitaldev.teaminc.com/');
+      });
+  
+      // After the session setup, navigate to the main page
+      cy.visit('https://digitaldev.teaminc.com/');
+    });
+  
+    it('Test Case 1: Verify Request Access Page', () => {
+      cy.get('.dx-button-text').click();
+      cy.url({ timeout: 10000 }).should('include', '/request-access'); //Assert on Request Access Page
+      cy.get('.dx-card', { timeout: 10000 }).should('be.visible');
+    });
+  
+    it('Test Case 2:Verify Home Page',()=> {
+      cy.xpath("//span[text()='Home']").click();
+  
+    })
+  
+  
+  
+  
+    // Add more tests here
+  });
+
+
+  //2301 a2
+
+  describe('Test Suite for OneInSight', () => {
+  
+    beforeEach('Set up login session and navigate to Request Access page', () => {
+      // Start fresh by visiting the page and login process without using cy.session initially
+      cy.visit('https://digitaldev.teaminc.com/#/');
+      
+      // Ensure the "Sign In" button is visible and click it
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      
+      // Load login credentials from the fixture
+      cy.fixture('oneinsight.json').then((data) => {
+        cy.origin('https://teamincb2c.b2clogin.com', { args: { data } }, ({ data }) => {
+          const Login = Cypress.require('../PageObjects/LoginPage');
+          const ln = new Login();
+          ln.setUserName(data.Username);
+          ln.setPassword(data.Password);
+          ln.clickSubmit();
+        });
+      });
+  
+      // Wait and assert that we are on the homepage after login
+      cy.url({ timeout: 10000 }).should('eq', 'https://digitaldev.teaminc.com/');
+      
+      // Now visit the Request Access page directly
+      cy.visit('https://digitaldev.teaminc.com/#/request-access');
+  
+      // Assert that we are on the Request Access page
+      cy.url({ timeout: 10000 }).should('include', '/request-access');
+      cy.log('Navigated to /request-access');
+    });
+  
+    it('Test Case 1: Verify Request Access Page', () => {
+      // Ensure the Request Access page content is visible
+      cy.get('.dx-card', { timeout: 10000 }).should('be.visible');
+      cy.log('Request Access page is visible');
+    });
+  
+    it('Test Case 2: Verify "Module" is Visible on Request Access Page', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 2');
+  
+      // Find the element (e.g., with class '.dx-card > :nth-child(3)') and ensure it's visible
+      cy.get('.dx-card > :nth-child(3)', { timeout: 10000 }).should('be.visible');
+      cy.log('Module is visible on the Request Access page');
+  
+      // Optional interaction with the module if needed
+      cy.get('.dx-list-select-all > .dx-widget > .dx-checkbox-container > .dx-checkbox-icon', { timeout: 10000 })
+        .click();
+      cy.log('Checkbox clicked inside module');
+    });
+  
+    
+  
+  });
+
+  //2301 c1
+
+  describe('Test Suite for OneInSight', () => {
+  
+    beforeEach('Set up login session and navigate to Request Access page', () => {
+      // Start fresh by visiting the page and login process without using cy.session initially
+      cy.visit('https://digitaldev.teaminc.com/#/');
+      
+      // Ensure the "Sign In" button is visible and click it
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      
+      // Load login credentials from the fixture
+      cy.fixture('oneinsight.json').then((data) => {
+        cy.origin('https://teamincb2c.b2clogin.com', { args: { data } }, ({ data }) => {
+          const Login = Cypress.require('../PageObjects/LoginPage');
+          const ln = new Login();
+          ln.setUserName(data.Username);
+          ln.setPassword(data.Password);
+          ln.clickSubmit();
+        });
+      });
+  
+      // Wait and assert that we are on the homepage after login
+      cy.url({ timeout: 10000 }).should('eq', 'https://digitaldev.teaminc.com/');
+      
+      // Now visit the Request Access page directly
+      cy.visit('https://digitaldev.teaminc.com/#/request-access');
+  
+      // Assert that we are on the Request Access page
+      cy.url({ timeout: 10000 }).should('include', '/request-access');
+      cy.log('Navigated to /request-access');
+    });
+  
+    it.skip('Test Case 1: Verify Request Access Page', () => {
+      // Ensure the Request Access page content is visible
+      cy.get('.dx-card', { timeout: 10000 }).should('be.visible');
+      cy.log('Request Access page is visible');
+    });
+  
+    it.skip('Test Case 2: Verify "Module" is Visible on Request Access Page', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 2');
+  
+      // Find the element (e.g., with class '.dx-card > :nth-child(3)') and ensure it's visible
+      cy.get('.dx-card > :nth-child(3)', { timeout: 10000 }).should('be.visible');
+      cy.log('Module is visible on the Request Access page');
+  
+      // Optional interaction with the module if needed
+      cy.get('.dx-list-select-all > .dx-widget > .dx-checkbox-container > .dx-checkbox-icon', { timeout: 10000 })
+        .click();
+      cy.log('Checkbox clicked inside module');
+    });
+  
+    
+    it('Test Case 3: Verify "Company Name and Site" is Visible on Request Access Page', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 2');
+  
+     
+      cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
+      cy.log('Company Name and Site is visible on the Request Access page');
+  
+      cy.get(':nth-child(6) > .dx-texteditor-container > .dx-texteditor-input-container > .dx-texteditor-input', { timeout: 10000 })
+        .type("Muthu is Testing Team Digital website");
+      cy.log('Entering Text in Company Name and Site');
+    });
+  
+  
+  
+  });
+  
+  
+  // finally 230125 
+
+  describe('Test Suite for OneInSight', () => {
+  
+    beforeEach('Set up login session and navigate to Request Access page', () => {
+      // Start fresh by visiting the page and login process without using cy.session initially
+      cy.visit('https://digitaldev.teaminc.com/#/');
+      
+      // Ensure the "Sign In" button is visible and click it
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      
+      // Load login credentials from the fixture
+      cy.fixture('oneinsight.json').then((data) => {
+        cy.origin('https://teamincb2c.b2clogin.com', { args: { data } }, ({ data }) => {
+          const Login = Cypress.require('../PageObjects/LoginPage');
+          const ln = new Login();
+          ln.setUserName(data.Username);
+          ln.setPassword(data.Password);
+          ln.clickSubmit();
+        });
+      });
+  
+      // Wait and assert that we are on the homepage after login
+      cy.url({ timeout: 10000 }).should('eq', 'https://digitaldev.teaminc.com/');
+      
+      // Now visit the Request Access page directly
+      cy.visit('https://digitaldev.teaminc.com/#/request-access');
+  
+      // Assert that we are on the Request Access page
+      cy.url({ timeout: 10000 }).should('include', '/request-access');
+      cy.log('Navigated to /request-access');
+    });
+  
+    it.skip('Test Case 1: Verify Request Access Page', () => {
+      // Ensure the Request Access page content is visible
+      cy.get('.dx-card', { timeout: 10000 }).should('be.visible');
+      cy.log('Request Access page is visible');
+    });
+  
+    it.skip('Test Case 2: Verify "Module" is Visible on Request Access Page', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 2');
+  
+      // Find the element (e.g., with class '.dx-card > :nth-child(3)') and ensure it's visible
+      cy.get('.dx-card > :nth-child(3)', { timeout: 10000 }).should('be.visible');
+      cy.log('Module is visible on the Request Access page');
+  
+      // Optional interaction with the module if needed
+      cy.get('.dx-list-select-all > .dx-widget > .dx-checkbox-container > .dx-checkbox-icon', { timeout: 10000 })
+        .click();
+      cy.log('Checkbox clicked inside module');
+    });
+  
+    
+    it.skip('Test Case 3: Verify "Company Name and Site" is Visible on Request Access Page', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 3');
+  
+     
+      cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
+      cy.log('Company Name and Site is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[1]", { timeout: 10000 })
+        .type("Muthu is Testing Company Name and Site");
+      cy.log('Entering Text in Company Name and Site');
+    });
+  
+    it.skip('Test Case 4: Verify "Team Contract" is Visible on Request Access Page', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 4');
+  
+     
+      cy.get('.dx-card > :nth-child(7)', { timeout: 10000 }).should('be.visible');
+      cy.log('Team Contract is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[2]", { timeout: 10000 })
+         .type('Muthu is Testing Team Contract');
+      cy.log('Entering Text in Company Name and Site');
+    });
+  
+    it.skip('Test Case 5: Verify that the "Request Access" button is visible on the Request Access page. Select only the "Module" option and proceed with the testing. The system should not allow the user to complete the task.', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 5');
+  
+      // Find the element (e.g., with class '.dx-card > :nth-child(3)') and ensure it's visible
+      cy.get('.dx-card > :nth-child(3)', { timeout: 10000 }).should('be.visible');
+      cy.log('Module is visible on the Request Access page');
+  
+      // Optional interaction with the module if needed
+      cy.get('.dx-list-select-all > .dx-widget > .dx-checkbox-container > .dx-checkbox-icon', { timeout: 10000 })
+        .click();
+      cy.log('Checkbox clicked inside module');
+  
+     
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      cy.log('"Request Access" button is Visible on the Request Access page and it is clicked');
+    });
+  
+    it.skip('Test Case 6: Verify that the "Request Access" button is visible on the Request Access page. Provide data only in "Company Name and Site" and proceed with the testing. The system should not allow the user to complete the task.', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 6');
+  
+      cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
+      cy.log('Company Name and Site is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[1]", { timeout: 10000 })
+        .type("Muthu is Testing Company Name and Site");
+      cy.log('Entering Text in Company Name and Site');
+  
+     
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      cy.log('"Request Access" button is Visible on the Request Access page and it is clicked');
+    });
+  
+    it.skip('Test Case 7: Verify that the "Request Access" button is visible on the Request Access page. Provide data only in "Team Contract" and proceed with the testing. The system should not allow the user to complete the task.', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 7');
+      
+      cy.wait(2000)
+      cy.get('.dx-card > :nth-child(7)', { timeout: 10000 }).should('be.visible');
+      cy.log('Team Contract is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[2]", { timeout: 10000 })
+         .type('Muthu is Testing Team Contract');
+      cy.log('Entering Text in Company Name and Site');
+  
+     
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      cy.log('"Request Access" button is Visible on the Request Access page and it is clicked');
+    });
+  
+    it.skip('Test Case 8: Verify that the "Request Access" button is visible on the Request Access page. Provide data on both "Company Name and Site" and "Team Contract" and proceed with the testing. The system should not allow the user to complete the task.', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 8');
+  
+      cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
+      cy.log('Company Name and Site is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[1]", { timeout: 10000 })
+        .type("Muthu is Testing Company Name and Site");
+      cy.log('Entering Text in Company Name and Site');
+      
+      cy.wait(2000)
+      cy.get('.dx-card > :nth-child(7)', { timeout: 10000 }).should('be.visible');
+      cy.log('Team Contract is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[2]", { timeout: 10000 })
+         .type('Muthu is Testing Team Contract');
+      cy.log('Entering Text in Company Name and Site');
+  
+     
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      cy.log('"Request Access" button is Visible on the Request Access page and it is clicked');
+      //Notification message "You must select at least one feature module to request access" should be displayed
+    });
+  
+    it.skip('Test Case 9: Verify that the "Request Access" button is visible on the Request Access page. Provide data for all fields on the page, including "Modules," "Company Name and Site," and "Team Contract," and proceed with the testing. The system should allow the user to successfully complete the task.', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 9');
+  
+      // Find the element (e.g., with class '.dx-card > :nth-child(3)') and ensure it's visible
+      cy.get('.dx-card > :nth-child(3)', { timeout: 10000 }).should('be.visible');
+      cy.log('Module is visible on the Request Access page');
+  
+      // Optional interaction with the module if needed
+      cy.get('.dx-list-select-all > .dx-widget > .dx-checkbox-container > .dx-checkbox-icon', { timeout: 10000 })
+        .click();
+      cy.log('Checkbox clicked inside module');
+  
+      cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
+      cy.log('Company Name and Site is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[1]", { timeout: 10000 })
+        .type("Muthu is Testing Company Name and Site");
+      cy.log('Entering Text in Company Name and Site');
+      
+      cy.wait(2000)
+      cy.get('.dx-card > :nth-child(7)', { timeout: 10000 }).should('be.visible');
+      cy.log('Team Contract is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[2]", { timeout: 10000 })
+         .type('Muthu is Testing Team Contract');
+      cy.log('Entering Text in Company Name and Site');
+  
+     
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      cy.log('"Request Access" button is Visible on the Request Access page and it is clicked');
+      //Notification message "You will receive a notification when your request has been fulfilled." should be displayed
+    });
+  
+    it('Test Case 10: Verify that the user is able to log out successfully after completing all tasks on the Request Access page.', () => {
+      // Ensure you're still on the Request Access page
+      cy.url().should('include', '/request-access');
+      cy.log('On /request-access page for Test Case 10');
+  
+      // Find the element (e.g., with class '.dx-card > :nth-child(3)') and ensure it's visible
+      cy.get('.dx-card > :nth-child(3)', { timeout: 10000 }).should('be.visible');
+      cy.log('Module is visible on the Request Access page');
+  
+      // Optional interaction with the module if needed
+      cy.get('.dx-list-select-all > .dx-widget > .dx-checkbox-container > .dx-checkbox-icon', { timeout: 10000 })
+        .click();
+      cy.log('Checkbox clicked inside module');
+  
+      cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
+      cy.log('Company Name and Site is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[1]", { timeout: 10000 })
+        .type("Muthu is Testing Company Name and Site");
+      cy.log('Entering Text in Company Name and Site');
+      
+      cy.wait(2000)
+      cy.get('.dx-card > :nth-child(7)', { timeout: 10000 }).should('be.visible');
+      cy.log('Team Contract is visible on the Request Access page');
+  
+      cy.xpath("(//input[@class='dx-texteditor-input'])[2]", { timeout: 10000 })
+         .type('Muthu is Testing Team Contract');
+      cy.log('Entering Text in Company Name and Site');
+  
+     
+      cy.get('.dx-button-text', { timeout: 10000 }).should('be.visible').click();
+      cy.log('"Request Access" button is Visible on the Request Access page and it is clicked');
+      //Notification message "You will receive a notification when your request has been fulfilled." should be displayed
+  
+      cy.get('.dx-popup-title > .dx-toolbar-items-container > .dx-toolbar-before > .dx-item > .dx-item-content > div', { timeout: 10000 }).should('be.visible');
+      cy.log('After completing the Request access Popup message is displayed');
+  
+      cy.get('.dx-toolbar-center > .dx-item > .dx-item-content > .dx-widget > .dx-button-content').click()
+    });
+  
+  
+  });
+  
