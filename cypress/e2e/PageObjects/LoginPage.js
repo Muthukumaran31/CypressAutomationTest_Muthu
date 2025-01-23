@@ -14,9 +14,7 @@ class Login
     {
       cy.get('button#next').click();
     }
-    verifyLogin()
-    {
-    }
+   
 }
 
 //Finally It should be Exported

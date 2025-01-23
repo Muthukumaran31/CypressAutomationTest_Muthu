@@ -56,7 +56,7 @@ describe('Test Suite for OneInSight Possitive scenarios', () => {
       cy.url().should('include', '/request-access');
       cy.log('On /request-access page for Test Case 3');
   
-     
+      cy.wait(2000)
       cy.get('.dx-card > :nth-child(5)', { timeout: 10000 }).should('be.visible');
       cy.log('Company Name and Site is visible on the Request Access page');
   
@@ -70,7 +70,7 @@ describe('Test Suite for OneInSight Possitive scenarios', () => {
       cy.url().should('include', '/request-access');
       cy.log('On /request-access page for Test Case 4');
   
-     
+      cy.wait(2000)
       cy.get('.dx-card > :nth-child(7)', { timeout: 10000 }).should('be.visible');
       cy.log('Team Contract is visible on the Request Access page');
   
